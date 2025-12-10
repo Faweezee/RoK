@@ -351,7 +351,7 @@ animations = [{
 size = Vector2(114, 259)
 
 [node name="Enemy1" type="CharacterBody2D"]
-collision_layer = 4
+collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_wlnc2")
 
