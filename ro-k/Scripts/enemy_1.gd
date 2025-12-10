@@ -24,13 +24,14 @@ func _ready():
 	scale = Vector2.ONE
 
 func _physics_process(delta: float) -> void:
+	var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+	velocity.y += gravity * delta
 	_update_health_bar()
 	if animation_player.current_animation == "attack" or animation_player.current_animation == "hurt":
 		return
 	
 	if !ray_right.is_colliding() and is_on_floor():
-		_flip_direction()
-	
+		_flip_direction()	
 	
 	if ray_player_right.is_colliding(): 
 		animation_player.play("attack")	
@@ -42,9 +43,7 @@ func _physics_process(delta: float) -> void:
 		animation_player.play("walking")
 	
 	velocity.x = (speed if moving_right else -speed)
-	var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
-	velocity.y += gravity * delta
-	
+		
 	move_and_slide()
 
 func _on_hit_box_body_entered(body: Node2D) -> void:

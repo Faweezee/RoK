@@ -961,9 +961,12 @@ zoom = Vector2(0.5, 0.5)
 [node name="Enemy1" parent="." instance=ExtResource("2_qxrlw")]
 position = Vector2(-19, -137)
 
+[node name="Enemy2" parent="." instance=ExtResource("2_qxrlw")]
+position = Vector2(-793.5, -103.5)
+
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 collision_layer = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-position = Vector2(-793.5, -103.5)
+position = Vector2(-323, -535)
 shape = SubResource("RectangleShape2D_qxrlw")
