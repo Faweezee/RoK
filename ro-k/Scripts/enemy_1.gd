@@ -1,58 +1,75 @@
 extends CharacterBody2D
 
-@export var speed : float = 100.0        # walking speed
-@export var sprint_speed : float = 200.0 # when chasing player / attacking
-var direction : int = 1                  # 1 = moving right; -1 = moving left
+@export var sprint_speed: float = 300.0
+@export var walk_speed: float = 100.0
+@export var speed : float
+var moving_right : bool = true
 @onready var ray_right: RayCast2D = $Raycasts/DirectionRayRight
-@onready var ray_left: RayCast2D = $Raycasts/DirectionRayLeft
 @onready var ray_player_right: RayCast2D = $Raycasts/DetectionRayCast
-@onready var ray_player_left: RayCast2D = $Raycasts/DetectionRayCastLeft
-@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var hurt_box: CollisionShape2D = $CollisionShape2D
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var hurt_box: CollisionShape2D = $HurtBox
+@onready var chase_ray: RayCast2D = $Raycasts/ChaseRay
+@onready var hit_box: Area2D = $HitBox
 @onready var Health_bar: TextureProgressBar = $TextureProgressBar
 var max_enemy_health: float = 200.0
 var enemy_health: float
-
-var chasing : bool = false
+var damage: float = 25.0
 
 func _ready():
 	enemy_health = max_enemy_health
+	speed = walk_speed
 	_update_health_bar()
-	ray_left.enabled = true
 	ray_right.enabled = true
-	ray_player_left.enabled = true
 	ray_player_right.enabled = true
-	sprite.flip_h = false
+	scale = Vector2.ONE
 
 func _physics_process(delta: float) -> void:
-	# detect walls and flip if needed
-	if direction > 0 and ray_right.is_colliding():
+	_update_health_bar()
+	if animation_player.current_animation == "attack" or animation_player.current_animation == "hurt":
+		return
+	
+	if !ray_right.is_colliding() and is_on_floor():
 		_flip_direction()
-	elif direction < 0 and ray_left.is_colliding():
-		_flip_direction()
-
-	# detect player for chase/attack
-	if direction > 0:
-		chasing = ray_player_right.is_colliding()
-	else:
-		chasing = ray_player_left.is_colliding()
-
-	# set horizontal velocity based on chase or patrol
-	velocity.x = (sprint_speed if chasing else speed) * direction
-
-	# optionally apply gravity (if needed)
+	
+	
+	if ray_player_right.is_colliding(): 
+		animation_player.play("attack")	
+	elif chase_ray.is_colliding():
+		speed = sprint_speed
+		animation_player.play("running")
+	else: 
+		speed = walk_speed
+		animation_player.play("walking")
+	
+	velocity.x = (speed if moving_right else -speed)
 	var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 	velocity.y += gravity * delta
-
-	# move the body
+	
 	move_and_slide()
 
-	# update sprite
-	sprite.flip_h = (direction < 0)
-	sprite.play("attack" if chasing else"walking")
+func _on_hit_box_body_entered(body: Node2D) -> void:
+	#call damage deal function from body(player), for now we reload scene
+	get_tree().reload_current_scene()
 
 func _flip_direction():
-	direction = -direction
+	moving_right = !moving_right
+	scale.x = -scale.x
 
 func _update_health_bar():
 	Health_bar.value = (enemy_health * 100) / max_enemy_health
+
+func play_walk():
+	animation_player.play("walking")
+
+#player will call function to make enemy get damaged
+func hurt():
+	animation_player.play("hurt")
+	enemy_health -= damage;
+	if enemy_health <= 0 :
+		queue_free()
+	
+func hit():
+	hit_box.monitoring = true
+
+func end_hit():
+	hit_box.monitoring = false
