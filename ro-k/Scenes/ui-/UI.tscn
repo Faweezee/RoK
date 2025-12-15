@@ -1,0 +1,203 @@
+[gd_scene load_steps=8 format=3 uid="uid://h15s24b2sh8e"]
+
+[ext_resource type="Script" uid="uid://dyiwefeab6dch" path="res://ui.gd" id="1_3b2b5"]
+[ext_resource type="Texture2D" uid="uid://o8qqx7e11hfo" path="res://Full_bg_1920x1080.png" id="1_b3bc3"]
+[ext_resource type="AudioStream" uid="uid://cggx3glsldhm1" path="res://Dark sanctuary.mp3" id="3_g6l6n"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3b2b5"]
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qui0h"]
+bg_color = Color(0.08468988, 0.08468994, 0.08468992, 1)
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_g6l6n"]
+content_margin_left = 149.0
+color = Color(0.00069389754, 0.00069389766, 0.0006938976, 1)
+thickness = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g6l6n"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = 3.0
+offset_right = 1.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3b2b5")
+
+[node name="Background" type="NinePatchRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_b3bc3")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -118.0
+offset_top = -81.0
+offset_right = 141.0
+offset_bottom = 43.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 31
+text = "Rhythm of knight"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -77.5
+offset_top = -17.5
+offset_right = 85.0
+offset_bottom = 83.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 13
+
+[node name="Start" type="Button" parent="VBoxContainer2"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_3b2b5")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_qui0h")
+theme_override_styles/hover = SubResource("StyleBoxFlat_3b2b5")
+theme_override_styles/focus = SubResource("StyleBoxFlat_3b2b5")
+text = "Start"
+
+[node name="Options" type="Button" parent="VBoxContainer2"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_3b2b5")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_qui0h")
+theme_override_styles/hover = SubResource("StyleBoxFlat_3b2b5")
+theme_override_styles/focus = SubResource("StyleBoxFlat_3b2b5")
+text = "Options"
+
+[node name="Quit" type="Button" parent="VBoxContainer2"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_3b2b5")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_qui0h")
+theme_override_styles/hover = SubResource("StyleBoxFlat_3b2b5")
+theme_override_styles/focus = SubResource("StyleBoxFlat_3b2b5")
+text = "Quit"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -165.0
+offset_top = -31.0
+offset_right = 174.0
+offset_bottom = 242.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.46618086, 0.4661808, 0.4661808, 1)
+
+[node name="Back" type="Button" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -55.5
+offset_top = -48.0
+offset_right = 75.5
+offset_bottom = -11.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_3b2b5")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_qui0h")
+theme_override_styles/hover = SubResource("StyleBoxFlat_3b2b5")
+theme_override_styles/focus = SubResource("StyleBoxFlat_3b2b5")
+text = "Back"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -102.0
+offset_right = 102.0
+offset_bottom = 184.0
+grow_horizontal = 2
+theme_override_constants/separation = 8
+
+[node name="Volume_container" type="HBoxContainer" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/separation = 9
+alignment = 1
+
+[node name="Label" type="Label" parent="ColorRect/VBoxContainer/Volume_container"]
+layout_mode = 2
+text = "Audio"
+
+[node name="Volume_bar" type="HSlider" parent="ColorRect/VBoxContainer/Volume_container"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_constants/center_grabber = 2
+theme_override_constants/grabber_offset = 0
+theme_override_styles/slider = SubResource("StyleBoxLine_g6l6n")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_g6l6n")
+max_value = 1.0
+step = 0.015
+
+[node name="Fullscreen_container" type="HBoxContainer" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 81
+alignment = 2
+
+[node name="Label" type="Label" parent="ColorRect/VBoxContainer/Fullscreen_container"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Fullscreen"
+
+[node name="Fullscreen" type="CheckButton" parent="ColorRect/VBoxContainer/Fullscreen_container"]
+layout_mode = 2
+size_flags_horizontal = 0
+button_pressed = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_g6l6n")
+autoplay = true
+bus = &"Background music"
+
+[connection signal="pressed" from="VBoxContainer2/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="VBoxContainer2/Options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="VBoxContainer2/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="ColorRect/Back" to="." method="_on_back_pressed"]
+[connection signal="value_changed" from="ColorRect/VBoxContainer/Volume_container/Volume_bar" to="." method="_on_h_slider_value_changed"]
+[connection signal="toggled" from="ColorRect/VBoxContainer/Fullscreen_container/Fullscreen" to="." method="_on_fullscreen_toggled"]
