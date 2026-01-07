@@ -1,0 +1,85 @@
+[gd_scene load_steps=9 format=3 uid="uid://dai8fs6ju67mj"]
+
+[ext_resource type="Texture2D" uid="uid://cr78f50ke0nmp" path="res://Assets/Backgrounds/Forest of Illusion Files/Layers/back.png" id="1_8gbba"]
+[ext_resource type="PackedScene" uid="uid://cllobs117aoyv" path="res://Scenes/character_body_2d.tscn" id="1_jjgbg"]
+[ext_resource type="Texture2D" uid="uid://dxe20tsxfgk25" path="res://Assets/Backgrounds/Forest of Illusion Files/Layers/tiles.png" id="2_bo1nx"]
+[ext_resource type="Texture2D" uid="uid://0hhsuaa0ggi1" path="res://Assets/Backgrounds/Forest of Illusion Files/Layers/middle.png" id="2_jjvhh"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_jjgbg"]
+distance = 1.625
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8gbba"]
+texture = ExtResource("2_bo1nx")
+1:1/size_in_atlas = Vector2i(4, 4)
+1:1/0 = 0
+6:1/size_in_atlas = Vector2i(4, 4)
+6:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_jjgbg"]
+tile_size = Vector2i(64, 55)
+sources/0 = SubResource("TileSetAtlasSource_8gbba")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jjvhh"]
+size = Vector2(175, 657)
+
+[node name="Main" type="Node2D"]
+
+[node name="BG Static" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0, 0)
+
+[node name="Sprite2D2" type="Sprite2D" parent="BG Static"]
+position = Vector2(790.0353, 317.10886)
+scale = Vector2(4.9245577, 4.1249204)
+texture = ExtResource("1_8gbba")
+
+[node name="Sprite2D3" type="Sprite2D" parent="BG Static"]
+position = Vector2(1572.0354, 317.10886)
+scale = Vector2(4.9245577, 4.1249204)
+texture = ExtResource("1_8gbba")
+
+[node name="Sprite2D" type="Sprite2D" parent="BG Static"]
+position = Vector2(30.746307, 318.35107)
+scale = Vector2(4.609329, 4.109475)
+texture = ExtResource("1_8gbba")
+
+[node name="BG Moving" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.8, 0.8)
+
+[node name="Sprite2D" type="Sprite2D" parent="BG Moving"]
+position = Vector2(258.7648, 265)
+scale = Vector2(3.1029415, 3.1029415)
+texture = ExtResource("2_jjvhh")
+
+[node name="Sprite2D2" type="Sprite2D" parent="BG Moving"]
+position = Vector2(1410.7646, 265)
+scale = Vector2(3.1029415, 3.1029415)
+texture = ExtResource("2_jjvhh")
+
+[node name="CharacterBody2D" parent="." instance=ExtResource("1_jjgbg")]
+position = Vector2(245.00002, 397)
+scale = Vector2(6, 6)
+
+[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
+position = Vector2(-0.5000038, -11.833334)
+scale = Vector2(0.16666667, 0.16666667)
+limit_left = -335
+position_smoothing_enabled = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(668, 484)
+scale = Vector2(8, 8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-15.125, 10.125)
+shape = SubResource("WorldBoundaryShape2D_jjgbg")
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_jjgbg")
+format = 2
+layer_0/tile_data = PackedInt32Array(655360, 393216, 1, 655361, 393216, 1, 655362, 393216, 1, 655363, 393216, 1, 655364, 393216, 1, 655365, 393216, 1, 655366, 393216, 1, 655367, 393216, 1, 655368, 393216, 1, 655369, 393216, 1, 655370, 393216, 1, 655371, 393216, 1, 655372, 393216, 1, 655373, 393216, 1, 655374, 393216, 1, 655375, 393216, 1, 655376, 393216, 1, 655377, 393216, 1, 655378, 393216, 1, 655379, 393216, 1, 655380, 393216, 1, 655381, 393216, 1, 655382, 393216, 1, 655383, 393216, 1, 655384, 393216, 1, 655385, 393216, 1, 655386, 393216, 1, 655387, 393216, 1, 655388, 393216, 1, 655389, 393216, 1, 655390, 393216, 1, 720895, 393216, 1, 720894, 393216, 1, 720893, 393216, 1, 720892, 393216, 1, 720891, 393216, 1, 720890, 393216, 1, 720889, 393216, 1, 720888, 393216, 1, 720887, 393216, 1, 720886, 393216, 1, 720885, 393216, 1, 720884, 393216, 1, 720883, 393216, 1)
+
+[node name="Bounds" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bounds"]
+position = Vector2(-422, 327.5)
+shape = SubResource("RectangleShape2D_jjvhh")
