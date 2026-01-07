@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c7bs7ha4u3r7p"
-path="res://.godot/imported/Right - Idle Blinking.png-7dd55ab15407fff9ee43122f0f026810.ctex"
+uid="uid://2e1jeu86b73f"
+path="res://.godot/imported/Walk.png-9dead8c935f3dd0f8d8d538ed139e8fd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://RoK-TestSprites/Enemy_1/Right - Idle Blinking.png"
-dest_files=["res://.godot/imported/Right - Idle Blinking.png-7dd55ab15407fff9ee43122f0f026810.ctex"]
+source_file="res://RoK-TestSprites/Dog_Enemy/Walk.png"
+dest_files=["res://.godot/imported/Walk.png-9dead8c935f3dd0f8d8d538ed139e8fd.ctex"]
 
 [params]
 

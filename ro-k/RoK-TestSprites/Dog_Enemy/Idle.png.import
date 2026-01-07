@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bihvcqk0nytl2"
-path="res://.godot/imported/Right - Running.png-900d694e8846cd869be8e86b848124bf.ctex"
+uid="uid://dbtd41uy55snc"
+path="res://.godot/imported/Idle.png-4687664cf149ba097109c8997dc0826f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://RoK-TestSprites/Enemy_1/Right - Running.png"
-dest_files=["res://.godot/imported/Right - Running.png-900d694e8846cd869be8e86b848124bf.ctex"]
+source_file="res://RoK-TestSprites/Dog_Enemy/Idle.png"
+dest_files=["res://.godot/imported/Idle.png-4687664cf149ba097109c8997dc0826f.ctex"]
 
 [params]
 

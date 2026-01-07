@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://hpqaeeatdm1q"
-path="res://.godot/imported/Right - Attacking.png-3a4e5932507858b45820a298ee353759.ctex"
+uid="uid://io74sk7i17jt"
+path="res://.godot/imported/healthbarProgress.png-ef3d4af81e3594c5e69886ac76bc85d3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://RoK-TestSprites/Enemy_1/Right - Attacking.png"
-dest_files=["res://.godot/imported/Right - Attacking.png-3a4e5932507858b45820a298ee353759.ctex"]
+source_file="res://RoK-TestSprites/healthbarProgress.png"
+dest_files=["res://.godot/imported/healthbarProgress.png-ef3d4af81e3594c5e69886ac76bc85d3.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dgtt3xgoqefgt"
-path="res://.godot/imported/Right - Hurt.png-00e22ed17ffc2b7ee7cf711698224e15.ctex"
+uid="uid://bfj64h5jj41fl"
+path="res://.godot/imported/Hyena_walk.png-71f02feeee1f9732e7a09df355defc79.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://RoK-TestSprites/Enemy_1/Right - Hurt.png"
-dest_files=["res://.godot/imported/Right - Hurt.png-00e22ed17ffc2b7ee7cf711698224e15.ctex"]
+source_file="res://RoK-TestSprites/Hyena_Enemy/Hyena_walk.png"
+dest_files=["res://.godot/imported/Hyena_walk.png-71f02feeee1f9732e7a09df355defc79.ctex"]
 
 [params]
 

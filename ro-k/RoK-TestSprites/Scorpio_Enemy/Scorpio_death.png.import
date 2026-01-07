@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bcyj25cfm3ueh"
-path="res://.godot/imported/Right - Walking.png-687096942c422f2a49cbbd6215935199.ctex"
+uid="uid://cioa1myqx67c1"
+path="res://.godot/imported/Scorpio_death.png-3337c2b328a9f84085a6a58862a5a5de.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://RoK-TestSprites/Enemy_1/Right - Walking.png"
-dest_files=["res://.godot/imported/Right - Walking.png-687096942c422f2a49cbbd6215935199.ctex"]
+source_file="res://RoK-TestSprites/Scorpio_Enemy/Scorpio_death.png"
+dest_files=["res://.godot/imported/Scorpio_death.png-3337c2b328a9f84085a6a58862a5a5de.ctex"]
 
 [params]
 
