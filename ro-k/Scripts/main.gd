@@ -36,17 +36,18 @@ func _on_player_attack_hit(damage_amount):
 	if dog and is_instance_valid(dog):
 		battle_hud.hide_reticles()
 		
-		# 1. Player always zips in
-		player.perform_zip_attack(dog.global_position)
+		# CHECK: Did we hit?
+		var is_hit = (damage_amount > 0)
 		
-		# 2. Sync wait (0.25s)
+		# 1. Player always zips in (Sound only plays if is_hit == true)
+		player.perform_zip_attack(dog.global_position, is_hit)
+		
+		# 2. Sync wait
 		await get_tree().create_timer(0.25).timeout 
 		
-		if damage_amount > 0:
-			# HIT: Dog takes damage
+		if is_hit:
 			dog.take_damage(damage_amount)
 		else:
-			# MISS (0 Damage): Dog Dodges!
 			print("MAIN: Player Missed! Dog Dodging.")
 			dog.perform_dodge()
 	else:
@@ -61,26 +62,27 @@ func _on_player_hurt_by_enemy(damage_amount):
 		# CASE A: PERFECT DODGE (0 Damage)
 		if damage_amount == 0:
 			print("MAIN: Perfect Dodge!")
-			player.perform_dodge_zip(75.0)
-			dog.perform_attack(player.original_combat_position)
+			player.perform_dodge_zip(200.0)
+			# Enemy attacks original spot -> FALSE for no sound
+			dog.perform_attack(player.original_combat_position, false)
 			
 		# CASE B: PARTIAL DODGE (Partial Damage)
 		elif damage_amount < 34: 
 			print("MAIN: Partial Dodge!")
-			player.perform_dodge_zip(45.0)
+			player.perform_dodge_zip(100.0)
 			await get_tree().create_timer(0.05).timeout
-			dog.perform_attack(player.global_position)
+			# Enemy attacks new spot -> TRUE for sound (still a hit)
+			dog.perform_attack(player.global_position, true)
 			
 			await get_tree().create_timer(0.25).timeout
 			if player.has_method("take_damage"):
 				player.take_damage(damage_amount)
 			
-		# CASE C: FULL HIT / MISS DEFENSE (34 Damage)
+		# CASE C: FULL HIT
 		else:
 			print("MAIN: Direct Hit!")
-			# 1. Player stands still
-			# 2. Enemy attacks Player directly
-			dog.perform_attack(player.global_position)
+			# Enemy attacks Player directly -> TRUE for sound
+			dog.perform_attack(player.global_position, true)
 			
 			await get_tree().create_timer(0.25).timeout
 			if player.has_method("take_damage"):
@@ -95,37 +97,31 @@ func _on_enemy_defeated():
 # --- FADE TO BLACK AND RESPAWN ---
 func _on_player_defeated():
 	print("MAIN: Player Defeated! Fading out...")
-	
-	# 1. Stop combat logic
 	_end_combat()
 	
-	# 2. Wait for Player Sprite to fade (Matches the 1.5s in Character_Controller.gd)
+	# 1. Wait for Player Sprite to fade
 	await get_tree().create_timer(1.5).timeout
 	
-	# --- CRITICAL FIX ---
-	# _end_combat() hides the HUD, so we must turn it back ON
-	# otherwise the black screen we add below will be invisible.
-	battle_hud.visible = true 
-	# --------------------
+	# Make HUD visible for overlay
+	battle_hud.visible = true
 	
-	# 3. Create a black screen overlay
+	# 2. Create a black screen overlay
 	var overlay = ColorRect.new()
 	overlay.color = Color.BLACK
-	overlay.color.a = 0.0 # Start transparent
+	overlay.color.a = 0.0 
 	overlay.set_anchors_preset(Control.PRESET_FULL_RECT)
 	
-	# Add to HUD
 	battle_hud.add_child(overlay) 
 	
-	# 4. Tween the screen to Black (0.5 seconds as requested)
+	# 3. Fade to Black
 	var tween = create_tween()
 	tween.tween_property(overlay, "color:a", 1.0, 0.5)
 	await tween.finished
 	
-	# 5. Hold the black screen for a moment (so it doesn't reload instantly)
+	# 4. Hold
 	await get_tree().create_timer(0.5).timeout
 	
-	# 6. Reload Scene
+	# 5. Reload Scene
 	get_tree().reload_current_scene()
 
 func _end_combat():

@@ -21,6 +21,7 @@ var original_combat_pos = Vector2.ZERO
 @onready var pivot: Node2D = $Pivot 
 @onready var anim_player: AnimationPlayer = $Pivot/AnimationPlayer
 @onready var health_bar: TextureProgressBar = $TextureProgressBar
+@onready var zip_sfx = $ZipImpactSFX 
 
 func _ready() -> void:
 	current_health = max_health
@@ -64,16 +65,21 @@ func enter_combat_mode():
 
 # --- ATTACK & DODGE LOGIC ---
 
-func perform_attack(target_position: Vector2):
+# UPDATED: Added land_hit boolean
+func perform_attack(target_position: Vector2, land_hit: bool):
 	if current_state == State.DEAD: return
 	current_state = State.ATTACK
 	anim_player.play("attack")
 	
-	# Zip to target (offset by 80px to stand in front of it)
 	var final_pos = Vector2(target_position.x + 80, global_position.y)
 	
 	var tween = create_tween()
 	tween.tween_property(self, "global_position", final_pos, ZIP_SPEED).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
+	
+	# Only play sound if it's a confirmed hit
+	if land_hit and zip_sfx:
+		tween.tween_callback(zip_sfx.play)
+		
 	await anim_player.animation_finished
 	
 	# Zip back
@@ -95,7 +101,6 @@ func perform_dodge():
 	tween.tween_property(self, "global_position", dodge_pos, ZIP_SPEED).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
 	
 	# 2. Wait for player's attack to finish + player zip back
-	# CHANGED: Increased to 1.0s to ensure Player is gone before we return
 	await get_tree().create_timer(1.0).timeout
 	
 	# 3. Zip Return

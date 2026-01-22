@@ -37,9 +37,21 @@ func _hide_all_ui():
 	if green_reticle: green_reticle.visible = false
 	if feedback_label: feedback_label.text = ""
 
+# --- UPDATED: Hides container instantly ---
 func hide_reticles():
 	container.visible = false
 	green_reticle.visible = false
+	# NOTE: We keep feedback_label visible so text remains on screen
+
+# --- NEW: Fades container back in smoothly ---
+func fade_in_reticles():
+	if combat_ended: return
+	
+	container.modulate.a = 0.0 # Start invisible
+	container.visible = true
+	
+	var fade_tween = create_tween()
+	fade_tween.tween_property(container, "modulate:a", 1.0, 0.5) # Fade in over 0.5s
 
 func stop_combat():
 	combat_ended = true
@@ -63,7 +75,10 @@ func start_player_turn_phase():
 	feedback_label.text = "[center][b]PLAYERS TURN[/b][/center]"
 	var screen_size = get_viewport().get_visible_rect().size
 	container.global_position = Vector2(screen_size.x * 0.75, screen_size.y * 0.5) - (container.size / 2)
-	container.visible = false
+	
+	# Initial fade in for the start of the turn
+	fade_in_reticles()
+	
 	await get_tree().create_timer(1.5).timeout
 	if not combat_ended: next_reticle_cycle()
 
@@ -75,7 +90,10 @@ func start_enemy_turn_phase():
 	feedback_label.text = "[center][b]ENEMIES TURN[/b][/center]"
 	var screen_size = get_viewport().get_visible_rect().size
 	container.global_position = Vector2(screen_size.x * 0.25, screen_size.y * 0.5) - (container.size / 2)
-	container.visible = false
+	
+	# Initial fade in for the start of the turn
+	fade_in_reticles()
+	
 	await get_tree().create_timer(1.5).timeout
 	if not combat_ended: next_reticle_cycle()
 
@@ -86,7 +104,10 @@ func next_reticle_cycle():
 		else: start_player_turn_phase()
 		return
 
-	container.visible = true
+	# Ensure container is visible/faded in before spawning reticle
+	if not container.visible:
+		fade_in_reticles()
+
 	green_reticle.visible = false
 	feedback_label.text = "[center][b]GET READY...[/b][/center]"
 	feedback_label.visible = true 
@@ -135,19 +156,17 @@ func _resolve_result(text, value, is_attack):
 	feedback_label.text = text
 	feedback_label.visible = true
 	
-	# --- FIXED SECTION ---
-	# Removed "if value > 0" checks. We must emit signals even on MISS (0) 
-	# or FULL DAMAGE (34) so Main.gd knows to play the zip animations.
-	
 	if is_attack:
 		emit_signal("attack_hit", value) 
 	else:
 		emit_signal("player_hurt", value) 
-	# ---------------------
 	
 	green_reticle.visible = false
 	
+	# Only hide container if action is happening
 	if value > 0 or (not is_attack and value == 0): 
+		# We hide it here so the 'zip' animation plays without UI clutter
+		# It will fade back in inside 'next_reticle_cycle'
 		container.visible = false 
 	
 	await get_tree().create_timer(1.5).timeout

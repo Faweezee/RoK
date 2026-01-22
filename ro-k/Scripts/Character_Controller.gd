@@ -13,6 +13,7 @@ var current_health: float
 @onready var animation = $AnimationPlayer
 @onready var sprite = $Sprite2D
 @onready var health_bar = $TextureProgressBar 
+@onready var zip_sfx = $ZipImpactSFX 
 
 var is_combat_locked = false 
 var original_combat_position = Vector2.ZERO 
@@ -25,7 +26,6 @@ func _ready():
 		health_bar.visible = false 
 
 func _physics_process(delta: float) -> void:
-	# 1. Apply Gravity (ALWAYS)
 	if not is_on_floor():
 		var current_gravity = get_gravity()
 		if velocity.y > 0:
@@ -33,18 +33,13 @@ func _physics_process(delta: float) -> void:
 		else:
 			velocity += current_gravity * delta
 
-	# 2. COMBAT LOCK
 	if is_combat_locked:
-		# Stop X movement, but allow Y (Gravity) to continue
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		move_and_slide()
-		
-		# Only play idle if we are actually on the floor
 		if is_on_floor() and animation.current_animation != "Attack Animation" and velocity.x == 0:
 			animation.play("Idle Animation")
 		return 
 
-	# 3. INPUT GUARD
 	var is_busy = false
 	if animation.current_animation == "Attack Animation" and animation.is_playing(): is_busy = true
 	elif animation.current_animation == "Jump Animation" and is_on_floor(): is_busy = true
@@ -54,7 +49,6 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 		return 
 
-	# 4. Handle Inputs
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		animation.play("Jump Animation", 0.1)
 		
@@ -84,7 +78,6 @@ func update_animations(direction):
 
 func enter_combat_state():
 	is_combat_locked = true
-	# FIXED: Only set X to zero. Keep Y (Gravity/Jump) momentum!
 	velocity.x = 0 
 	original_combat_position = global_position 
 	if health_bar: health_bar.visible = true 
@@ -93,13 +86,23 @@ func exit_combat_state():
 	is_combat_locked = false
 	if health_bar: health_bar.visible = false 
 
-func perform_zip_attack(target_position):
+# --- UPDATED FUNCTION ---
+func perform_zip_attack(target_position, land_hit: bool):
 	animation.stop()
 	animation.play("Attack Animation")
 	
 	var tween = create_tween()
 	var attack_spot = Vector2(target_position.x - 180, global_position.y)
+	
+	# 1. Move to enemy
 	tween.tween_property(self, "global_position", attack_spot, ZIP_SPEED).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
+	
+	# 2. Logic: Should we play sound?
+	if land_hit and zip_sfx:
+		# OPTIONAL: Add a tiny delay here if you want sound slightly after impact
+		tween.tween_interval(0.15) 
+		tween.tween_callback(zip_sfx.play)
+	
 	await animation.animation_finished
 	
 	tween = create_tween()
@@ -126,11 +129,9 @@ func die():
 	print("PLAYER DIED")
 	emit_signal("player_died")
 	
-	# 1. Red Flash
 	sprite.modulate = Color.RED 
 	await get_tree().create_timer(0.2).timeout 
 	
-	# 2. Fade Sprite to Transparent
 	var tween = create_tween()
-	tween.tween_property(self, "modulate:a", 0.0, 1.5) # Fade out over 1.5 seconds
+	tween.tween_property(self, "modulate:a", 0.0, 1.5) 
 	await tween.finished
