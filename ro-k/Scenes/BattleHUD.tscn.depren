@@ -1,0 +1,65 @@
+[gd_scene load_steps=5 format=3 uid="uid://dc1goph8o7hfs"]
+
+[ext_resource type="Script" uid="uid://d2tlpii46varp" path="res://Scripts/battle_hud.gd" id="1_vag6d"]
+[ext_resource type="Texture2D" uid="uid://btjn6rtbh3jfy" path="res://Assets/UI/Orange_Reticle.svg" id="2_u6200"]
+[ext_resource type="Texture2D" uid="uid://rvf4yvhql3ew" path="res://Assets/UI/Red_Reticle.svg" id="3_aweg5"]
+[ext_resource type="Texture2D" uid="uid://dg5wvlwu0n616" path="res://Assets/UI/Green_Reticle.svg" id="4_guxgc"]
+
+[node name="BattleHud" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -342.0
+offset_top = -70.0
+offset_right = -342.0
+offset_bottom = -70.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vag6d")
+
+[node name="TurnBar" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1153.0
+offset_bottom = 66.0
+color = Color(0.4392157, 0.8784314, 0, 1)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TurnBar"]
+layout_mode = 0
+offset_right = 1153.0
+offset_bottom = 67.0
+theme_override_font_sizes/bold_font_size = 50
+bbcode_enabled = true
+text = "[b]Players Turn[/b]"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Node2D" type="Node2D" parent="."]
+scale = Vector2(0.5, 0.5)
+
+[node name="Orange Reticle" type="TextureRect" parent="Node2D"]
+offset_left = 1572.0
+offset_top = 644.0
+offset_right = 1895.0
+offset_bottom = 967.0
+texture = ExtResource("2_u6200")
+expand_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Red Reticle" type="TextureRect" parent="Node2D"]
+offset_left = 1607.0
+offset_top = 677.0
+offset_right = 1864.0
+offset_bottom = 934.0
+texture = ExtResource("3_aweg5")
+expand_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Green Reticle" type="TextureRect" parent="Node2D"]
+offset_left = 1605.0
+offset_top = 676.0
+offset_right = 1864.0
+offset_bottom = 935.0
+texture = ExtResource("4_guxgc")
+expand_mode = 1
+metadata/_edit_use_anchors_ = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://cllobs117aoyv"]
+[gd_scene load_steps=10 format=4 uid="uid://cllobs117aoyv"]
 
 [ext_resource type="Script" uid="uid://b6qjsdnxxy62t" path="res://Scripts/Character_Controller.gd" id="1_ymxaj"]
 
@@ -92,6 +92,9 @@ size_override = Vector2(720, 640)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_88kja"]
 size = Vector2(20, 47)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ymxaj"]
+size = Vector2(114, 24)
+
 [node name="CharacterBody2D" type="CharacterBody2D"]
 script = ExtResource("1_ymxaj")
 
@@ -133,3 +136,12 @@ metadata/_aseprite_wizard_source_file_hash_ = "057261a3b0d7ed0a28bfbeeeaf918cc0"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 0.5)
 shape = SubResource("RectangleShape2D_88kja")
+
+[node name="CombatDetector" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CombatDetector"]
+position = Vector2(47, 12)
+shape = SubResource("RectangleShape2D_ymxaj")
+debug_color = Color(0.75448054, 0.45624655, 0.0514626, 0.41960785)

@@ -1,0 +1,88 @@
+[gd_scene load_steps=5 format=3 uid="uid://dc1goph8o7hfs"]
+
+[ext_resource type="Script" uid="uid://d2tlpii46varp" path="res://Scripts/battle_hud.gd" id="1_vag6d"]
+[ext_resource type="Texture2D" uid="uid://btjn6rtbh3jfy" path="res://Assets/UI/Orange_Reticle.svg" id="2_u6200"]
+[ext_resource type="Texture2D" uid="uid://rvf4yvhql3ew" path="res://Assets/UI/Red_Reticle.svg" id="3_aweg5"]
+[ext_resource type="Texture2D" uid="uid://dg5wvlwu0n616" path="res://Assets/UI/Green_Reticle.svg" id="4_guxgc"]
+
+[node name="BattleHUD" type="CanvasLayer"]
+script = ExtResource("1_vag6d")
+
+[node name="Control" type="Node" parent="."]
+
+[node name="ReticleContainer" type="Control" parent="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 798.0
+offset_top = 432.0
+offset_right = 798.0
+offset_bottom = 432.0
+scale = Vector2(0.5, 0.5)
+
+[node name="OrangeReticle" type="TextureRect" parent="Control/ReticleContainer"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -161.5
+offset_top = -161.5
+offset_right = 161.5
+offset_bottom = 161.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(161.5, 161.5)
+texture = ExtResource("2_u6200")
+expand_mode = 1
+
+[node name="RedReticle" type="TextureRect" parent="Control/ReticleContainer"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.5
+offset_top = -128.5
+offset_right = 128.5
+offset_bottom = 128.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(128.5, 128.5)
+texture = ExtResource("3_aweg5")
+expand_mode = 1
+
+[node name="GreenReticle" type="TextureRect" parent="Control/ReticleContainer"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -129.5
+offset_top = -129.5
+offset_right = 129.5
+offset_bottom = 129.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(130, 130)
+texture = ExtResource("4_guxgc")
+expand_mode = 1
+
+[node name="TurnBar" type="ColorRect" parent="Control"]
+offset_left = -199.0
+offset_top = 18.0
+offset_right = 1467.0
+offset_bottom = 84.0
+color = Color(0.4392157, 0.8784314, 0, 1)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/TurnBar"]
+layout_mode = 0
+offset_right = 1569.0
+offset_bottom = 67.0
+theme_override_font_sizes/bold_font_size = 50
+bbcode_enabled = true
+text = "[b]Players Turn[/b]"
+horizontal_alignment = 1
+vertical_alignment = 1

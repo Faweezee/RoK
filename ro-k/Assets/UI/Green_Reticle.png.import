@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dbtd41uy55snc"
-path="res://.godot/imported/Idle.png-4687664cf149ba097109c8997dc0826f.ctex"
+uid="uid://boac75narn1la"
+path="res://.godot/imported/Green_Reticle.png-7a5ba551ce9f92f91f7c34130f3a07c9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://RoK-TestSprites/Dog_Enemy/Idle.png"
-dest_files=["res://.godot/imported/Idle.png-4687664cf149ba097109c8997dc0826f.ctex"]
+source_file="res://Assets/UI/Green_Reticle.png"
+dest_files=["res://.godot/imported/Green_Reticle.png-7a5ba551ce9f92f91f7c34130f3a07c9.ctex"]
 
 [params]
 

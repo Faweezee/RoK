@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cllobs117aoyv" path="res://Scenes/character_body_2d.tscn" id="1_jjgbg"]
 [ext_resource type="Texture2D" uid="uid://dxe20tsxfgk25" path="res://Assets/Backgrounds/Forest of Illusion Files/Layers/tiles.png" id="2_bo1nx"]
 [ext_resource type="Texture2D" uid="uid://0hhsuaa0ggi1" path="res://Assets/Backgrounds/Forest of Illusion Files/Layers/middle.png" id="2_jjvhh"]
-[ext_resource type="Script" uid="uid://c8aqj7yfir753" path="res://Scripts/camera_2d.gd" id="5_344ge"]
+[ext_resource type="Script" uid="uid://c8aqj7yfir753" path="res://Scenes/camera_2d.gd" id="5_344ge"]
 [ext_resource type="PackedScene" uid="uid://de0d8gcdrav1q" path="res://Scenes/dog_enemy.tscn" id="5_kry3j"]
 [ext_resource type="PackedScene" uid="uid://dc1goph8o7hfs" path="res://Scenes/BattleHUD.tscn" id="7_6bp64"]
 
@@ -30,6 +30,7 @@ size = Vector2(175, 657)
 script = ExtResource("1_21xkr")
 
 [node name="BG Static" type="Parallax2D" parent="."]
+visible = false
 scroll_scale = Vector2(0, 0)
 
 [node name="Sprite2D2" type="Sprite2D" parent="BG Static"]
@@ -53,6 +54,7 @@ scale = Vector2(4.609329, 4.109475)
 texture = ExtResource("1_8gbba")
 
 [node name="BG Moving" type="Parallax2D" parent="."]
+visible = false
 scroll_scale = Vector2(0.8, 0.8)
 
 [node name="Sprite2D" type="Sprite2D" parent="BG Moving"]
@@ -77,7 +79,6 @@ scale = Vector2(6, 6)
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
 position = Vector2(-0.5000038, -11.833334)
 scale = Vector2(0.16666667, 0.16666667)
-offset = Vector2(350, 0)
 limit_left = -335
 position_smoothing_enabled = true
 script = ExtResource("5_344ge")
@@ -102,6 +103,10 @@ position = Vector2(-422, 327.5)
 shape = SubResource("RectangleShape2D_jjvhh")
 
 [node name="DogEnemy" parent="." instance=ExtResource("5_kry3j")]
-position = Vector2(1302, 536.00006)
+position = Vector2(1513, 423)
 
-[node name="BattleHUD" parent="." instance=ExtResource("7_6bp64")]
+[node name="BattleHud" parent="." instance=ExtResource("7_6bp64")]
+offset_left = 15.0
+offset_top = 58.0
+offset_right = 15.0
+offset_bottom = 58.0
