@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=4 uid="uid://cllobs117aoyv"]
+[gd_scene load_steps=14 format=4 uid="uid://cllobs117aoyv"]
 
 [ext_resource type="Script" uid="uid://b6qjsdnxxy62t" path="res://Scripts/Character_Controller.gd" id="1_ymxaj"]
 [ext_resource type="Texture2D" uid="uid://bpsc6rtvfnbx" path="res://RoK-TestSprites/healthbarUnder.png" id="2_it8n0"]
 [ext_resource type="Texture2D" uid="uid://io74sk7i17jt" path="res://RoK-TestSprites/healthbarProgress.png" id="3_gbyq6"]
 [ext_resource type="AudioStream" uid="uid://d2tmshem1mchc" path="res://Assets/Audio/SFX/3_Hunter_Hit.wav" id="4_gbyq6"]
+[ext_resource type="AudioStream" uid="uid://bbosbc5b3nacf" path="res://Assets/Audio/SFX/Miss.wav" id="5_pbq55"]
 
 [sub_resource type="Animation" id="Animation_ymxaj"]
 length = 1.551
@@ -160,3 +161,6 @@ debug_color = Color(0.75448054, 0.45624655, 0.0514626, 0.41960785)
 
 [node name="ZipImpactSFX" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_gbyq6")
+
+[node name="ZipMissSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_pbq55")

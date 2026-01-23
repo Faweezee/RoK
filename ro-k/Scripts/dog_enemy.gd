@@ -22,6 +22,8 @@ var original_combat_pos = Vector2.ZERO
 @onready var anim_player: AnimationPlayer = $Pivot/AnimationPlayer
 @onready var health_bar: TextureProgressBar = $TextureProgressBar
 @onready var zip_sfx = $ZipImpactSFX 
+# NEW: Reference for Miss Sound
+@onready var zip_miss_sfx = $ZipMissSFX 
 
 func _ready() -> void:
 	current_health = max_health
@@ -65,7 +67,6 @@ func enter_combat_mode():
 
 # --- ATTACK & DODGE LOGIC ---
 
-# UPDATED: Added land_hit boolean
 func perform_attack(target_position: Vector2, land_hit: bool):
 	if current_state == State.DEAD: return
 	current_state = State.ATTACK
@@ -73,10 +74,15 @@ func perform_attack(target_position: Vector2, land_hit: bool):
 	
 	var final_pos = Vector2(target_position.x + 80, global_position.y)
 	
+	# --- CHANGED: PLAY MISS SOUND IMMEDIATELY ---
+	# If we missed, we play the "Whoosh" right now (at the start)
+	if not land_hit and zip_miss_sfx:
+		zip_miss_sfx.play()
+	
 	var tween = create_tween()
 	tween.tween_property(self, "global_position", final_pos, ZIP_SPEED).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
 	
-	# Only play sound if it's a confirmed hit
+	# Logic: If it IS a hit, we wait until we arrive to play the Impact sound
 	if land_hit and zip_sfx:
 		tween.tween_callback(zip_sfx.play)
 		

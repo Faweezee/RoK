@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://de0d8gcdrav1q"]
+[gd_scene load_steps=19 format=3 uid="uid://de0d8gcdrav1q"]
 
 [ext_resource type="Script" uid="uid://hhpoerj2kbsb" path="res://Scripts/dog_enemy.gd" id="1_ktuw8"]
 [ext_resource type="Texture2D" uid="uid://bpeneyo15lper" path="res://RoK-TestSprites/Dog_Enemy/Hurt.png" id="2_ca3k5"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://io74sk7i17jt" path="res://RoK-TestSprites/healthbarProgress.png" id="4_tgkus"]
 [ext_resource type="Texture2D" uid="uid://v8hdycx8xokv" path="res://RoK-TestSprites/Dog_Enemy/Death.png" id="6_yw0kc"]
 [ext_resource type="AudioStream" uid="uid://biai41iw17i2j" path="res://Assets/Audio/SFX/1_Enemy_Hit.wav" id="9_yw0kc"]
+[ext_resource type="AudioStream" uid="uid://bbosbc5b3nacf" path="res://Assets/Audio/SFX/Miss.wav" id="10_663ee"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ca3k5"]
 size = Vector2(22.217571, 20.505573)
@@ -307,3 +308,6 @@ debug_color = Color(0.7529412, 0.45490196, 0.050980393, 0.41960785)
 
 [node name="ZipImpactSFX" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("9_yw0kc")
+
+[node name="ZipMissSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_663ee")

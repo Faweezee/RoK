@@ -14,6 +14,8 @@ var current_health: float
 @onready var sprite = $Sprite2D
 @onready var health_bar = $TextureProgressBar 
 @onready var zip_sfx = $ZipImpactSFX 
+# NEW: Reference for the Miss Sound
+@onready var zip_miss_sfx = $ZipMissSFX 
 
 var is_combat_locked = false 
 var original_combat_position = Vector2.ZERO 
@@ -97,11 +99,13 @@ func perform_zip_attack(target_position, land_hit: bool):
 	# 1. Move to enemy
 	tween.tween_property(self, "global_position", attack_spot, ZIP_SPEED).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
 	
-	# 2. Logic: Should we play sound?
+	# 2. Logic: Play Hit sound OR Miss Sound
 	if land_hit and zip_sfx:
-		# OPTIONAL: Add a tiny delay here if you want sound slightly after impact
 		tween.tween_interval(0.15) 
 		tween.tween_callback(zip_sfx.play)
+	elif not land_hit and zip_miss_sfx:
+		# Miss sounds usually play immediately without the small interval delay
+		tween.tween_callback(zip_miss_sfx.play)
 	
 	await animation.animation_finished
 	
