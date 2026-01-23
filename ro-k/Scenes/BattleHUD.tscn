@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://dc1goph8o7hfs"]
+[gd_scene load_steps=6 format=3 uid="uid://dc1goph8o7hfs"]
 
 [ext_resource type="Script" uid="uid://d2tlpii46varp" path="res://Scripts/battle_hud.gd" id="1_vag6d"]
 [ext_resource type="Texture2D" uid="uid://btjn6rtbh3jfy" path="res://Assets/UI/Orange_Reticle.svg" id="2_u6200"]
 [ext_resource type="Texture2D" uid="uid://rvf4yvhql3ew" path="res://Assets/UI/Red_Reticle.svg" id="3_aweg5"]
 [ext_resource type="Texture2D" uid="uid://dg5wvlwu0n616" path="res://Assets/UI/Green_Reticle.svg" id="4_guxgc"]
+[ext_resource type="AudioStream" uid="uid://c5llvgavx2k6d" path="res://Assets/Audio/Background_Music/Battle_Theme_GD.wav" id="5_u6200"]
 
 [node name="BattleHUD" type="CanvasLayer"]
 script = ExtResource("1_vag6d")
@@ -86,3 +87,6 @@ bbcode_enabled = true
 text = "[b]Players Turn[/b]"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_u6200")
