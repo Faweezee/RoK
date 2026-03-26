@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://c5llvgavx2k6d"
-path="res://.godot/imported/Battle_Theme_GD.wav-c2ed3ef56fa557b3fae95c4f56c5087e.sample"
+path="res://.godot/imported/Level 2 Audio.wav-3013813af58441256ee0fd736d8976d3.sample"
 
 [deps]
 
-source_file="res://Assets/Audio/Background_Music/Battle_Theme_GD.wav"
-dest_files=["res://.godot/imported/Battle_Theme_GD.wav-c2ed3ef56fa557b3fae95c4f56c5087e.sample"]
+source_file="res://Assets/Audio/Background_Music/Level 2 Audio.wav"
+dest_files=["res://.godot/imported/Level 2 Audio.wav-3013813af58441256ee0fd736d8976d3.sample"]
 
 [params]
 
