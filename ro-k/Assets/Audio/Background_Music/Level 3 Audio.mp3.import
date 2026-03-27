@@ -12,8 +12,8 @@ dest_files=["res://.godot/imported/Level 3 Audio.mp3-65157097ffc431eac168f5970a1
 
 [params]
 
-loop=false
-loop_offset=0
-bpm=0
+loop=true
+loop_offset=35.52
+bpm=0.0
 beat_count=0
 bar_beats=4
