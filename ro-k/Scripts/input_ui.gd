@@ -1,6 +1,7 @@
 extends Control
 @onready var input_button: Button = $Button
-const INPUT_BUTTON = preload("uid://bdhl358igdt6s")
+const INPUT_BUTTON = preload("res://Scenes/input_button.tscn")
+
 var check_input = false
 var check_label:Label
 @onready var action_list: VBoxContainer = $PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/ScrollContainer/ActionList
@@ -13,9 +14,7 @@ var actions = {
 	"move down":["move down","ui_down"],
 	"move left":["move left","ui_left"],
 	"jump":["jump","ui_accept"],
-	"cancel":["cancel","ui_cancel"],
-	"Attack":["Attack", "Attack"],
-	"Inventory":["Inventory", "Inventory"]
+	"Attack":["Attack", "Attack"]
 	 }
 func _ready() -> void:
 	if !FileAccess.file_exists(SETTINGSFILE):
@@ -60,7 +59,6 @@ func create_action_button(input_button) -> void:
 				
 			
 func save_input_event(action, event:InputEventKey):
-	print(event.keycode)
 	config.set_value("keybindings", action, event.keycode)
 	config.save(SETTINGSFILE)
 	

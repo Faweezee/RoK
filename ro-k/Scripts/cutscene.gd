@@ -4,7 +4,8 @@ var message: String
 var number:int = 0
 @onready var timer: Timer = $"../Timer"
 var timer_running: bool = false
-const HAZY_CITY = preload("uid://bciex1hebcjvf")
+const HAZY_CITY = preload("uid://b7rn10y2rja3l")
+var game = false
 var allow_change = false
 var trial = true
 @onready var background: NinePatchRect = $"../NinePatchRect"
@@ -17,20 +18,16 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("ui_cancel"):
-		get_tree().quit()
-	
-	if Input.is_action_just_pressed("Inventory"):
-		get_tree().reload_current_scene()
+	if Input.is_action_just_pressed("ui_accept"):
+		text = message
+		number = message.length()
+		timer.start()
 		
-	if (Input.is_action_just_pressed("ui_accept") and allow_change == true) and trial == true:
-		background.texture = HAZY_CITY
-		message = "There lived a hunter that wants to be the greatest in the land"
-		text = ""
-		number = 0
-		trial = false
 		
-	if timer_running == false:
+	if Input.is_action_just_pressed("ui_accept") and allow_change == true:
+		get_tree().change_scene_to_file("res://Scenes/main.tscn")
+		
+	if timer_running == false and allow_change == false:
 		timer_running = true
 		timer.start()
 	pass
@@ -44,4 +41,3 @@ func _on_timer_timeout() -> void:
 		allow_change = false
 	else:
 		allow_change = true
-	pass # Replace with function body.

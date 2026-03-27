@@ -1,18 +1,13 @@
 [gd_scene load_steps=10 format=3 uid="uid://h15s24b2sh8e"]
 
-[ext_resource type="Script" uid="uid://dyiwefeab6dch" path="res://Scenes/ui-/ui.gd" id="1_3b2b5"]
-[ext_resource type="Texture2D" uid="uid://bv0fnds7l1efn" path="res://Assets/Backgrounds/Forest of Illusion Files/Previews/Previewx3.png" id="2_qw4un"]
-[ext_resource type="Texture2D" uid="uid://cepfewjrpejsb" path="res://Scenes/ui-/Game_Name.png" id="3_302nr"]
-[ext_resource type="AudioStream" uid="uid://cggx3glsldhm1" path="res://Scenes/ui-/Dark sanctuary.mp3" id="3_g6l6n"]
-[ext_resource type="PackedScene" uid="uid://dfboyroy1v66t" path="res://Scenes/ui-/input_ui.tscn" id="4_qui0h"]
+[ext_resource type="Script" uid="uid://dq08xcqrlik12" path="res://Scripts/ui.gd" id="1_3b2b5"]
+[ext_resource type="Texture2D" uid="uid://cf8xx8mujgby0" path="res://Assets/Backgrounds/Full_bg_1920x1080.png" id="1_b3bc3"]
+[ext_resource type="AudioStream" uid="uid://b82h07q7uecra" path="res://Assets/Audio/Background_Music/Dark sanctuary.mp3" id="3_g6l6n"]
+[ext_resource type="PackedScene" uid="uid://dfboyroy1v66t" path="res://Scenes/input_ui.tscn" id="4_qui0h"]
+[ext_resource type="AudioStream" uid="uid://blgdo5nwww83u" path="res://Assets/Audio/SFX/Minimalist2.mp3" id="5_qwshj"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3b2b5"]
-bg_color = Color(0.49221575, 0.6486676, 0.4918496, 1)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0.13688998, 0.39, 0.13259998, 1)
+border_color = Color(0, 0, 0, 1)
 corner_radius_top_left = 50
 corner_radius_top_right = 50
 corner_radius_bottom_right = 50
@@ -55,28 +50,29 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_qw4un")
+texture = ExtResource("1_b3bc3")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Background"]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
-offset_left = -36.5
-offset_right = 36.5
-offset_bottom = 63.0
+anchor_bottom = 0.5
+offset_left = -118.0
+offset_top = -81.0
+offset_right = 141.0
+offset_bottom = 43.0
 grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Title" type="Label" parent="Background/VBoxContainer"]
+[node name="Title" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 31
+text = "BEAT OF THE HUNTER
+"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="Sprite2D" type="Sprite2D" parent="Background/VBoxContainer"]
-position = Vector2(15.499973, 228)
-scale = Vector2(0.19415456, 0.1941545)
-texture = ExtResource("3_302nr")
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -85,27 +81,24 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -168.0
-offset_top = 38.0
-offset_right = 146.0
-offset_bottom = 263.5
+offset_left = -77.5
+offset_top = -17.5
+offset_right = 85.0
+offset_bottom = 83.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 13
 
 [node name="Start" type="Button" parent="VBoxContainer2"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 40
 theme_override_styles/normal = SubResource("StyleBoxFlat_3b2b5")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_qui0h")
 theme_override_styles/hover = SubResource("StyleBoxFlat_3b2b5")
 theme_override_styles/focus = SubResource("StyleBoxFlat_3b2b5")
 text = "Start"
-expand_icon = true
 
 [node name="Options" type="Button" parent="VBoxContainer2"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 40
 theme_override_styles/normal = SubResource("StyleBoxFlat_3b2b5")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_qui0h")
 theme_override_styles/hover = SubResource("StyleBoxFlat_3b2b5")
@@ -114,7 +107,6 @@ text = "Options"
 
 [node name="Quit" type="Button" parent="VBoxContainer2"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 40
 theme_override_styles/normal = SubResource("StyleBoxFlat_3b2b5")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_qui0h")
 theme_override_styles/hover = SubResource("StyleBoxFlat_3b2b5")
@@ -122,17 +114,16 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_3b2b5")
 text = "Quit"
 
 [node name="ColorRect" type="ColorRect" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -323.0
-offset_top = -141.0
-offset_right = 280.0
-offset_bottom = 160.0
+offset_left = -165.0
+offset_top = -31.0
+offset_right = 174.0
+offset_bottom = 242.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.46618086, 0.4661808, 0.4661808, 1)
@@ -144,13 +135,12 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -136.5
-offset_top = -56.0
-offset_right = 89.86365
+offset_left = -55.5
+offset_top = -48.0
+offset_right = 75.5
 offset_bottom = -11.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_3b2b5")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_qui0h")
 theme_override_styles/hover = SubResource("StyleBoxFlat_3b2b5")
@@ -162,12 +152,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -235.5
-offset_top = 13.0
-offset_right = -31.5
-offset_bottom = 197.0
+offset_left = -102.0
+offset_right = 102.0
+offset_bottom = 184.0
 grow_horizontal = 2
-scale = Vector2(2.225, 2.225)
 theme_override_constants/separation = 8
 
 [node name="Volume_container" type="HBoxContainer" parent="ColorRect/VBoxContainer"]
@@ -210,11 +198,10 @@ size_flags_horizontal = 0
 [node name="inputConfig" type="Button" parent="ColorRect"]
 custom_minimum_size = Vector2(0, 37)
 layout_mode = 0
-offset_left = 165.0
-offset_top = 193.0
-offset_right = 391.324
-offset_bottom = 238.0
-theme_override_font_sizes/font_size = 24
+offset_left = 99.0
+offset_top = 178.0
+offset_right = 262.0
+offset_bottom = 215.0
 theme_override_styles/normal = SubResource("StyleBoxFlat_3b2b5")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_qui0h")
 theme_override_styles/hover = SubResource("StyleBoxFlat_3b2b5")
@@ -238,7 +225,6 @@ offset_left = -329.0
 offset_top = -188.0
 offset_right = 407.0
 offset_bottom = 307.0
-script = null
 
 [node name="Back2" type="Button" parent="InputUI"]
 layout_mode = 1
@@ -258,6 +244,9 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_qui0h")
 theme_override_styles/hover = SubResource("StyleBoxFlat_3b2b5")
 theme_override_styles/focus = SubResource("StyleBoxFlat_3b2b5")
 text = "Back"
+
+[node name="Button_click" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_qwshj")
 
 [connection signal="pressed" from="VBoxContainer2/Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="VBoxContainer2/Options" to="." method="_on_options_pressed"]

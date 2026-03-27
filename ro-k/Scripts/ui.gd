@@ -13,6 +13,7 @@ extends Control
 @onready var back: Button = $ColorRect/Back
 @onready var back_2: Button = $InputUI/Back2
 @onready var input_config: Button = $ColorRect/inputConfig
+@onready var button_click: AudioStreamPlayer2D = $Button_click
 
 
 var fullscreen_check:bool
@@ -78,20 +79,24 @@ func Audio_settings(volume_check:float):
 	
 			
 func _on_start_pressed() -> void:
-	get_tree().change_scene_to_file("res://Assets/Scenes/cutscene.tscn")
+	button_click.playing = true
+	get_tree().change_scene_to_file("res://Scenes/cutscene.tscn")
 	
 
 
 func _on_options_pressed() -> void:
+	button_click.playing = true
 	option_pane.visible = true
 
 
 func _on_quit_pressed() -> void:
+	button_click.playing = true
 	get_tree().quit()
 	
 
 
 func _on_fullscreen_toggled(toggled_on: bool) -> void:
+	button_click.playing = true
 	if toggled_on == true:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 		save_display_settings("Fullscreen", true)
@@ -101,8 +106,8 @@ func _on_fullscreen_toggled(toggled_on: bool) -> void:
 		save_display_settings("Fullscreen", false)
 		
 
-
 func _on_back_pressed() -> void:
+	button_click.playing = true
 	option_pane.visible = false
 	pass # Replace with function body.
 	
@@ -116,6 +121,7 @@ func _on_h_slider_value_changed(value: float) -> void:
 
 
 func _on_input_config_pressed() -> void:
+	button_click.playing = true
 	input_ui.visible = true
 	
 	
@@ -128,5 +134,7 @@ func hover_anim(button: Button):
 	pass
 
 func _on_back_2_pressed() -> void:
+	button_click.playing = true
 	input_ui.visible = false
+	
 	
