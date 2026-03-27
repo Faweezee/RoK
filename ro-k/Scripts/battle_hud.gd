@@ -18,38 +18,46 @@ var turn_action_count = 0
 const PLAYER_COLOR = Color("#569e16") 
 const ENEMY_COLOR = Color("#C72F2A") 
 
-# --- RHYTHM SETTINGS ---
-const BPM = 120.0
-const SEC_PER_BEAT = 60.0 / BPM 
-const RETICLE_DURATION = SEC_PER_BEAT * 2 
-
 # ==========================================
-# 🎵 MASTER TIMING CONTROLS 🎵
+# 🎵 EXPORTED RHYTHM SETTINGS 🎵
 # ==========================================
-# 1. RETICLE DELAYS: Wait time before spawning each circle
-var player_reticle_delays = [
-	SEC_PER_BEAT * 2.7,  
-	SEC_PER_BEAT * 3.6,  
-	SEC_PER_BEAT * 3.5   
-]
+@export var track_audio: AudioStream 
+@export var track_bpm: float = 120.0
+@export var track_start_time: float = 0.0 
+# --- NEW: Controls the volume of the track in decibels ---
+@export var track_volume_db: float = 0.0 
 
-var enemy_reticle_delays = [
-	SEC_PER_BEAT * 2.5,  
-	SEC_PER_BEAT * 3.5,  
-	SEC_PER_BEAT * 3.2   
-]
+@export var player_reticle_delays: Array[float] = [2.7, 3.6, 3.5]
+@export var enemy_reticle_delays: Array[float] = [2.5, 3.5, 3.2]
 
-# 2. TRANSITION DELAYS: These were causing your drift!
-# Time to wait before the VERY FIRST reticle spawns when a new turn starts
-var turn_start_delay = SEC_PER_BEAT * 3.0
+@export var turn_start_delay: float = 3.0 
+@export var post_hit_delay: float = 2.8 
 
-# Time to wait AFTER you hit/miss before the game moves to the next circle/turn
-# If the next phase feels completely out of sync, tweak this number!
-var post_hit_delay = SEC_PER_BEAT * 2.8 
+var sec_per_beat: float
+var reticle_duration: float
+var actual_turn_start: float
+var actual_post_hit: float
+var actual_player_delays: Array[float] = []
+var actual_enemy_delays: Array[float] = []
 # ==========================================
-
 
 func _ready():
+	if track_audio and music_player:
+		music_player.stream = track_audio
+		# --- NEW: Applies your custom volume right when the level loads ---
+		music_player.volume_db = track_volume_db
+
+	sec_per_beat = 60.0 / track_bpm
+	reticle_duration = sec_per_beat * 2.0
+	actual_turn_start = turn_start_delay * sec_per_beat
+	actual_post_hit = post_hit_delay * sec_per_beat
+	
+	for beats in player_reticle_delays:
+		actual_player_delays.append(beats * sec_per_beat)
+		
+	for beats in enemy_reticle_delays:
+		actual_enemy_delays.append(beats * sec_per_beat)
+
 	_hide_all_ui()
 	if container: container.set_anchors_preset(Control.PRESET_CENTER)
 	reset_reticle_positions()
@@ -78,7 +86,7 @@ func fade_in_reticles():
 	container.modulate.a = 0.0 
 	container.visible = true
 	var fade_tween = create_tween()
-	fade_tween.tween_property(container, "modulate:a", 1.0, SEC_PER_BEAT) 
+	fade_tween.tween_property(container, "modulate:a", 1.0, sec_per_beat) 
 
 func stop_combat():
 	combat_ended = true
@@ -90,7 +98,8 @@ func stop_combat():
 		var music_tween = create_tween()
 		music_tween.tween_property(music_player, "volume_db", -80.0, 1.5)
 		music_tween.tween_callback(music_player.stop)
-		music_tween.tween_callback(func(): music_player.volume_db = 0.0) # We keep the code's reset at 0, you can adjust the base node volume in inspector.
+		# --- CHANGED: Resets to your custom volume instead of a hardcoded 0.0 ---
+		music_tween.tween_callback(func(): music_player.volume_db = track_volume_db)
 	
 	_hide_all_ui()
 
@@ -100,7 +109,7 @@ func start_combat_mode():
 	turn_bar.visible = true 
 	
 	if music_player and not music_player.playing:
-		music_player.play()
+		music_player.play(track_start_time)
 	
 	start_player_turn_phase()
 
@@ -115,8 +124,7 @@ func start_player_turn_phase():
 	
 	fade_in_reticles()
 	
-	# Uses your custom variable here
-	await get_tree().create_timer(turn_start_delay).timeout
+	await get_tree().create_timer(actual_turn_start).timeout
 	if not combat_ended: next_reticle_cycle()
 
 func start_enemy_turn_phase():
@@ -130,8 +138,7 @@ func start_enemy_turn_phase():
 	
 	fade_in_reticles()
 	
-	# Uses your custom variable here
-	await get_tree().create_timer(turn_start_delay).timeout
+	await get_tree().create_timer(actual_turn_start).timeout
 	if not combat_ended: next_reticle_cycle()
 
 func next_reticle_cycle():
@@ -150,9 +157,9 @@ func next_reticle_cycle():
 	
 	var calculated_delay = 0.0
 	if is_player_turn:
-		calculated_delay = player_reticle_delays[turn_action_count]
+		calculated_delay = actual_player_delays[turn_action_count]
 	else:
-		calculated_delay = enemy_reticle_delays[turn_action_count]
+		calculated_delay = actual_enemy_delays[turn_action_count]
 	
 	await get_tree().create_timer(calculated_delay).timeout
 	if not combat_ended: spawn_reticle()
@@ -168,7 +175,7 @@ func spawn_reticle():
 	
 	if tween: tween.kill()
 	tween = create_tween()
-	tween.tween_property(green_reticle, "scale", Vector2(0, 0), RETICLE_DURATION)
+	tween.tween_property(green_reticle, "scale", Vector2(0, 0), reticle_duration)
 	tween.finished.connect(_on_miss)
 
 func _input(event):
@@ -212,6 +219,9 @@ func _resolve_result(text, value, is_attack):
 	
 	turn_action_count += 1
 	
-	# Uses your custom variable here to stop drifting between phases
-	await get_tree().create_timer(post_hit_delay).timeout
+	await get_tree().create_timer(actual_post_hit).timeout
 	if not combat_ended: next_reticle_cycle()
+
+
+func _on_story_ui_mid_level_dialogue_finished() -> void:
+	pass # Replace with function body.

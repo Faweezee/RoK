@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://6phoy1dljahb"
+path="res://.godot/imported/Level 3 Audio.mp3-65157097ffc431eac168f5970a1a7eac.mp3str"
+
+[deps]
+
+source_file="res://Assets/Audio/Background_Music/Level 3 Audio.mp3"
+dest_files=["res://.godot/imported/Level 3 Audio.mp3-65157097ffc431eac168f5970a1a7eac.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=35.52
+bpm=0.0
+beat_count=0
+bar_beats=4

@@ -1,9 +1,10 @@
-[gd_scene load_steps=20 format=3 uid="uid://dai8fs6ju67mj"]
+[gd_scene load_steps=22 format=3 uid="uid://dai8fs6ju67mj"]
 
 [ext_resource type="Texture2D" uid="uid://cr78f50ke0nmp" path="res://Assets/Backgrounds/Forest of Illusion Files/Layers/back.png" id="1_8gbba"]
 [ext_resource type="Script" uid="uid://bgpe7ooxfwck8" path="res://Scripts/main.gd" id="1_21xkr"]
 [ext_resource type="PackedScene" uid="uid://cllobs117aoyv" path="res://Scenes/character_body_2d.tscn" id="1_jjgbg"]
 [ext_resource type="Texture2D" uid="uid://dxe20tsxfgk25" path="res://Assets/Backgrounds/Forest of Illusion Files/Layers/tiles.png" id="2_bo1nx"]
+[ext_resource type="PackedScene" uid="uid://c26k5wcricbju" path="res://Scenes/HealthPickup.tscn" id="2_h1bgf"]
 [ext_resource type="Texture2D" uid="uid://0hhsuaa0ggi1" path="res://Assets/Backgrounds/Forest of Illusion Files/Layers/middle.png" id="2_jjvhh"]
 [ext_resource type="Script" uid="uid://c8aqj7yfir753" path="res://Scripts/camera_2d.gd" id="5_344ge"]
 [ext_resource type="PackedScene" uid="uid://de0d8gcdrav1q" path="res://Scenes/dog_enemy.tscn" id="5_kry3j"]
@@ -12,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://by8kgndkavfnn" path="res://Assets/Backgrounds/Forest of Illusion Files/Layers/Bounds.png" id="9_ynf5e"]
 [ext_resource type="PackedScene" uid="uid://b5jgodccur76q" path="res://Scenes/floating_platform_begin.tscn" id="11_d1ilt"]
 [ext_resource type="Texture2D" uid="uid://dlt0ul4a26t0r" path="res://Assets/Backgrounds/Grass_Texture_Round.png" id="11_fdnlq"]
+[ext_resource type="AudioStream" uid="uid://cg73r5khjwqfr" path="res://Assets/Audio/Background_Music/Level 1 Audio.mp3" id="11_k12tt"]
 [ext_resource type="PackedScene" uid="uid://u2hes8jmcqj" path="res://Scenes/floating_platform.tscn" id="12_6iyac"]
 [ext_resource type="PackedScene" uid="uid://ck7qxl30kd0ll" path="res://Scenes/story_ui.tscn" id="14_jkdf5"]
 [ext_resource type="PackedScene" uid="uid://cmeuxg28dtvwo" path="res://Scenes/PauseMenu.tscn" id="15_wsu2k"]
@@ -35,6 +37,9 @@ sources/0 = SubResource("TileSetAtlasSource_8gbba")
 
 [node name="main" type="Node2D"]
 script = ExtResource("1_21xkr")
+
+[node name="HealthPickup" parent="." instance=ExtResource("2_h1bgf")]
+position = Vector2(2139, 271)
 
 [node name="Backgrounds" type="Node2D" parent="."]
 position = Vector2(0, -350)
@@ -181,10 +186,15 @@ layer_0/tile_data = PackedInt32Array(655360, 393216, 1, 655361, 393216, 1, 65536
 
 [node name="DogEnemy" parent="." instance=ExtResource("5_kry3j")]
 position = Vector2(4229, 541.00006)
-patrol_distance = 100.0
+patrol_distance = 50.0
 
 [node name="BattleHUD" parent="." instance=ExtResource("7_6bp64")]
-visible = false
+track_audio = ExtResource("11_k12tt")
+track_bpm = 90.0
+track_start_time = 93.42
+track_volume_db = -20.0
+player_reticle_delays = Array[float]([2.7, 3.7, 3.8])
+enemy_reticle_delays = Array[float]([1.0, 3.8, 3.8])
 
 [node name="Platforms - Group 1" type="Node" parent="."]
 
